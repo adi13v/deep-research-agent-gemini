@@ -1,0 +1,423 @@
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Design tokens ── */
+:root {
+    --bg: #0a0a0a;
+    --fg: #e8e8e0;
+    --accent: #e8ff3a;
+    --border: #333330;
+    --dim: #5a5a52;
+    --error: #ff3a3a;
+    --panel: #111110;
+}
+
+/* ── Base ── */
+html,
+body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 15px;
+}
+
+/* SVG-based ordered dither noise overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect x='0' y='0' width='1' height='1' fill='white'/%3E%3Crect x='2' y='2' width='1' height='1' fill='white'/%3E%3C/svg%3E");
+    background-size: 4px 4px;
+}
+
+/* CRT scanline dither */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.06;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 1px,
+            #ffffff 1px,
+            #ffffff 2px);
+    background-size: 100% 4px;
+}
+
+/* ── Layout ── */
+#app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+}
+
+/* ── Header ── */
+header {
+    border-bottom: 2px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+header h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+header span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+}
+
+/* ── Dithering sphere — full-page fixed background ── */
+#dither-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    opacity: 0.18;
+}
+
+/* ── Input section ── */
+#input-section {
+    border-bottom: 2px solid var(--border);
+    padding: 28px 32px;
+}
+
+#input-section label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+#query-wrapper {
+    display: flex;
+    gap: 0;
+    border: 2px solid var(--border);
+}
+
+#query-wrapper:focus-within {
+    border-color: var(--accent);
+}
+
+#query {
+    flex: 1;
+    background: var(--panel);
+    color: var(--fg);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    padding: 14px 16px;
+    border: none;
+    outline: none;
+    resize: none;
+    min-height: 80px;
+    line-height: 1.6;
+}
+
+#query::placeholder {
+    color: var(--dim);
+}
+
+#send-btn {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0 28px;
+    cursor: pointer;
+    align-self: stretch;
+    white-space: nowrap;
+    transition: background 0.1s;
+}
+
+#send-btn:hover {
+    background: #d4e830;
+}
+
+#send-btn:active {
+    background: #bfd020;
+}
+
+#send-btn:disabled {
+    background: var(--border);
+    color: var(--dim);
+    cursor: not-allowed;
+}
+
+/* ── Status bar ── */
+#status-bar {
+    padding: 10px 32px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#status-bar.active {
+    color: var(--accent);
+}
+
+#status-bar.error {
+    color: var(--error);
+}
+
+.blink {
+    animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ── Result section ── */
+#result-section {
+    padding: 32px 32px 0;
+    display: none;
+}
+
+#result-section.visible {
+    display: block;
+}
+
+/* ── Markdown output ── */
+#markdown-output {
+    line-height: 1.75;
+    font-size: 15px;
+    color: var(--fg);
+}
+
+#markdown-output h1,
+#markdown-output h2,
+#markdown-output h3 {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 2em 0 0.6em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    color: var(--accent);
+}
+
+#markdown-output h1 {
+    font-size: 18px;
+}
+
+#markdown-output h2 {
+    font-size: 15px;
+}
+
+#markdown-output h3 {
+    font-size: 13px;
+    color: var(--fg);
+}
+
+#markdown-output p {
+    margin: 0.8em 0;
+}
+
+#markdown-output ul,
+#markdown-output ol {
+    margin: 0.5em 0 0.5em 1.5em;
+}
+
+#markdown-output li {
+    margin: 0.3em 0;
+}
+
+#markdown-output blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 1em 0;
+    padding: 4px 16px;
+    background: var(--panel);
+    color: var(--dim);
+}
+
+#markdown-output code {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+}
+
+#markdown-output pre {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+#markdown-output pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+#markdown-output a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+#markdown-output a:hover {
+    text-decoration: underline;
+}
+
+/* ── Inline citation badge ── */
+.cite-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin: 0 2px;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    text-decoration: none;
+    position: relative;
+    top: -1px;
+    flex-shrink: 0;
+}
+
+.cite-badge:hover {
+    border-color: var(--accent);
+}
+
+.cite-badge img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    display: block;
+}
+
+.cite-badge .fallback-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--dim);
+    text-align: center;
+    line-height: 1;
+    padding: 1px 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 16px;
+}
+
+/* ── Sources section ── */
+#sources-section {
+    margin-top: 40px;
+    border-top: 2px solid var(--border);
+    padding-top: 24px;
+}
+
+#sources-section h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 16px;
+    border: none !important;
+}
+
+#sources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.source-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-top: none;
+    text-decoration: none;
+    color: var(--fg);
+    transition: background 0.1s;
+}
+
+.source-item:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.source-item:hover {
+    background: var(--panel);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.source-item img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.source-item .src-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+.source-item .src-idx {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    margin-right: 4px;
+}
+
+/* ── Dither divider ── */
+.dither-divider {
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg,
+            var(--accent) 0px, var(--accent) 2px,
+            transparent 2px, transparent 4px);
+    margin: 0 32px;
+}

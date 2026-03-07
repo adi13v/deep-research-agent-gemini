@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEEP RESEARCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+</head>
+
+<body>
+  <!-- Full-page dithering background -->
+  <canvas id="dither-canvas"></canvas>
+
+  <div id="app">
+    <header>
+      <h1>DEEP RESEARCH</h1>
+      <span>// AGENT v1.0 // GEMINI</span>
+    </header>
+
+    <section id="input-section">
+      <label for="query">RESEARCH QUERY</label>
+      <div id="query-wrapper">
+        <textarea id="query" placeholder="What do you want to research?" rows="3" autofocus></textarea>
+        <button id="send-btn">RESEARCH</button>
+      </div>
+    </section>
+
+    <div id="status-bar">READY</div>
+    <div class="dither-divider" id="divider" style="display:none;"></div>
+
+    <section id="result-section">
+      <div id="markdown-output"></div>
+      <div id="sources-section" style="display:none;">
+        <h2>// SOURCES</h2>
+        <div id="sources-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="shader.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
