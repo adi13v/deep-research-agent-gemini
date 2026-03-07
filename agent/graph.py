@@ -79,9 +79,12 @@ def web_research(state: WebSearchState, config: RunnableConfig) -> OverallState:
         config={"tools": [{"google_search": {}}], "temperature": 0},
     )
 
-    resolved_urls = resolve_urls(
-        response.candidates[0].grounding_metadata.grounding_chunks, state["id"]
+    grounding_chunks = (
+        getattr(response.candidates[0].grounding_metadata, "grounding_chunks", None)
+        if response.candidates and response.candidates[0].grounding_metadata
+        else None
     )
+    resolved_urls = resolve_urls(grounding_chunks, state["id"])
     citations = get_citations(response, resolved_urls)
 
     modified_text = insert_citation_markers(response.text, citations)

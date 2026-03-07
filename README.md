@@ -1,6 +1,6 @@
 # deep-research
 
-A minimal deep research agent built as a learning exercise for [LangGraph](https://github.com/langchain-ai/langgraph). It iteratively searches the web via Gemini's grounding API, reflects on results, and produces a cited markdown answer — served through a FastAPI backend and a brutalist HTML frontend.
+A minimal deep research agent built as a learning exercise for LangGraph. It iteratively searches the web via Gemini's grounding API, reflects on results, and produces a cited markdown answer.
 
 ---
 
