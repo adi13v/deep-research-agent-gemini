@@ -1,0 +1,18 @@
+2026-03-10 22:27:59,125 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-10 22:28:01,378 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-10 22:28:01,383 - INFO - In the node generate_query
+2026-03-10 22:28:01,384 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-10 22:28:06,999 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-10 22:28:07,002 - INFO - In the node web_research
+2026-03-10 22:28:07,014 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-10 22:28:08,986 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-10 22:28:08,989 - INFO - In the node reflection
+2026-03-10 22:28:09,004 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-10 22:28:12,325 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-10 22:28:12,331 - INFO - In the node finalize_answer
+2026-03-10 22:28:12,332 - INFO - Completed the research
+2026-03-10 22:28:12,332 - INFO - Initiating the source enrichment
+2026-03-10 22:28:12,666 - INFO - HTTP Request: HEAD https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBuF2SgaCgvWsiGpeqBjXrvu1vPzi9oqGX9VDDD0MD_iTrRbfOP5_iG4MQatCuTic8Ugw8hTp222c3YK5_SQ0VIP1RiSa8a3VLygsYzzG46sbpFchOduw2KnMDMqCT3wikbi21k46OcGPGbhNzHr-y6TkcevKgVu-EYTAIS_AGBjS9tgR3N1vDtwGqTRezPIm1btPfUFOa1Z63KGbBcKB2dDiK1MA= "HTTP/1.1 302 Found"
+2026-03-10 22:28:13,449 - INFO - HTTP Request: HEAD https://www.reddit.com/r/BollyBlindsNGossip/comments/wuodq9/alia_bhatt_reveals_pankaj_tripathi_prepped_her/ "HTTP/1.1 200 OK"
+2026-03-10 22:28:13,502 - INFO - HTTP Request: HEAD https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEb9XWmLCbXuiDfPQe9JJ1m5EuYrlp0g5sU7cOfd8axa4OlOUoSjWrZGa-zpReUfJWaiXG0REKHIHjYD4GP6-tEJNfA6li3_-8LWJZglv5OWoJh3ri-GVvnDK6j6KJIt4KZq-plW7KXs35_h_ckZUkysgf6_T6Zb6guyBoWM6Ct-oBSNgHU0oz339XDuifR6bW2EboQp_iwgbraSdN4L4VP-wzb-aKZGP7e7WGEPWtqG-qhNozFG-rFbApceBYu0A11OG-8nhOHX_ztK50tqsrvt2GGrj0mhGMbxzgP "HTTP/1.1 302 Found"
+2026-03-10 22:28:13,720 - INFO - HTTP Request: HEAD https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/did-you-know-alia-bhatt-was-trained-by-this-actor-for-udta-punjab/articleshow/93690360.cms "HTTP/1.1 200 OK"

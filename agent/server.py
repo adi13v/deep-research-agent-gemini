@@ -1,5 +1,6 @@
+import logging
 from urllib.parse import urlparse
-
+import logging
 import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+logging.basicConfig(
+    filename="/var/log/deep-research/app.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s", 
+)
 
 # ── Request / Response models ──────────────────────────────────────────────────
 
@@ -113,9 +119,11 @@ def research(req: ResearchRequest):
     final_state: dict = {}
     for step in graph.stream(state):
         for _node, output in step.items():
+            logging.info(f"In the node {_node}")
             if isinstance(output, dict):
                 final_state.update(output)
 
+    logging.info("Completed the research")
     answer = ""
     for msg in reversed(final_state.get("messages", [])):
         if hasattr(msg, "content"):
@@ -124,7 +132,7 @@ def research(req: ResearchRequest):
         if isinstance(msg, dict) and msg.get("role") == "assistant":
             answer = msg.get("content", "")
             break
-
+    logging.info("Initiating the source enrichment")
     sources = enrich_sources(final_state.get("sources_gathered", []))
 
     # Replace vertex grounding URLs in the answer with real article URLs

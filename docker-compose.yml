@@ -1,0 +1,9 @@
+services:
+  deep-research:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/var/log/deep-research
+    env_file:
+      - .env

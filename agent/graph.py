@@ -192,8 +192,6 @@ def finalize_answer(state: OverallState, config: RunnableConfig):
                 source["short_url"], source["value"]
             )
             unique_sources.append(source)
-    with open("final_result.json", "w") as f:
-        f.write(result.content)
     return {
         "messages": [AIMessage(content=result.content)],
         "sources_gathered": unique_sources,
