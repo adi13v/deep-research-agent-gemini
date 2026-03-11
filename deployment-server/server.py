@@ -1,3 +1,4 @@
+from starlette.responses import JSONResponse
 import asyncio.base_subprocess
 from fastapi import FastAPI
 import uvicorn
@@ -10,13 +11,18 @@ app = FastAPI(title="Deployment Server")
 def check_and_deploy():
 
     print("-------------DEPLOYING------------- ")
-    subprocess.run(["./scripts/deploy.sh"])
+    result = subprocess.run(["./scripts/deploy.sh"], timeout=120)
+
+    if result.returncode == 0:
+        return {"status": "success"}
+    else:
+        return JSONResponse(content={"status": "failure"}, status_code=500)
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok and ready to dihploy"}
+    return {"status": "ok and ready to deeeeploy"}
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8005)
+    uvicorn.run(app, host="0.0.0.0", port=8005, reload=True)

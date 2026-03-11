@@ -14,7 +14,7 @@ const divider = document.getElementById('divider');
 queryEl.addEventListener('keydown', e => {
     if (e.ctrlKey && e.key === 'Enter') doResearch();
 });
-sendBtn.addEventListener('click', doResearch);  
+sendBtn.addEventListener('click', doResearch);
 
 // ── Status helpers ────────────────────────────────────────────────────────
 function setStatus(msg, state = '') {

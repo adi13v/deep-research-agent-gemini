@@ -2,7 +2,7 @@
 
 set -e
 
-REPO_DIR="/app/deep-research"
+REPO_DIR="$HOME/prog/deep-research"
 FRONTEND_DIR="$REPO_DIR/frontend"
 WWW_DIR="/var/www/deep-research"
 
@@ -15,6 +15,8 @@ git pull origin master
 
 # Get the latest commit on the repo
 REPO_COMMIT=$(git rev-parse HEAD)
+
+export COMMIT=$REPO_COMMIT
 
 # Get the commit hash from the running container's image name (deep-research:<commit>)
 DOCKER_IMAGE=$(docker ps --filter name=deep-research --format '{{.Image}}' 2>/dev/null || echo "none:none")
