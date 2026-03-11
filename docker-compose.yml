@@ -1,6 +1,7 @@
 services:
   deep-research:
     build: .
+    image: deep-research:${COMMIT}
     ports:
       - "8000:8000"
     volumes:
