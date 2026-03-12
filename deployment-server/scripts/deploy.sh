@@ -31,7 +31,7 @@ if [ "$REPO_COMMIT" != "$DOCKER_COMMIT" ]; then
 
     if [ -n "$BACKEND_DIFF" ]; then
         echo "Backend changes detected, rebuilding Docker..."
-        docker compose up --build -d
+        docker compose -p deep-research-$COMMIT up -d --build
         echo "Docker rebuilt and running."
     else
         echo "Only frontend changes in commit diff, skipping Docker rebuild."
