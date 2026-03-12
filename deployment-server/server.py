@@ -11,7 +11,7 @@ app = FastAPI(title="Deployment Server")
 def check_and_deploy():
 
     print("-------------DEPLOYING------------- ")
-    result = subprocess.run(["./scripts/deploy.sh"], timeout=120)
+    result = subprocess.run(["./scripts/deploy.sh"], )
 
     if result.returncode == 0:
         return {"status": "success"}

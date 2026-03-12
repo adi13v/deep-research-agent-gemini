@@ -2,7 +2,7 @@
 
 set -e
 
-REPO_DIR="$HOME/prog/deep-research"
+REPO_DIR="/home/user/prog/deep-research"
 FRONTEND_DIR="$REPO_DIR/frontend"
 WWW_DIR="/var/www/deep-research"
 
