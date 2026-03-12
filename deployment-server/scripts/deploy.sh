@@ -31,7 +31,7 @@ if [ "$REPO_COMMIT" != "$DOCKER_COMMIT" ]; then
 
     if [ -n "$BACKEND_DIFF" ]; then
         echo "Backend changes detected, rebuilding Docker..."
-
+        # Blue green deployment
         if lsof -i :8000 >/dev/null 2>&1; then
             PORT=8001
         else
