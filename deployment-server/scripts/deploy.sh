@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -Eexuo pipefail
 
 REPO_DIR="/home/user/prog/deep-research"
 FRONTEND_DIR="$REPO_DIR/frontend"
