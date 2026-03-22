@@ -6,7 +6,7 @@ REPO_DIR="/home/user/prog/deep-research"
 FRONTEND_DIR="$REPO_DIR/frontend"
 WWW_DIR="/var/www/deep-research"
 
-PORT=8000 # default
+PORT=8000 # set as default
 
 echo "Deployment started..."
 
