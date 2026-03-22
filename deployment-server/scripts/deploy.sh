@@ -32,13 +32,24 @@ if [ "$REPO_COMMIT" != "$DOCKER_COMMIT" ]; then
     if [ -n "$BACKEND_DIFF" ]; then
         echo "Backend changes detected, rebuilding Docker..."
         # Blue green deployment
-        if lsof -i :8000 >/dev/null 2>&1; then
+        if ss -ltn | grep -q ':8000 ' ; then
             PORT=8001
         else
             PORT=8000
         fi
 
-        PORT=$PORT docker compose -p deep-research-$COMMIT up -d --build
+        PROJECT=deep-research-$COMMIT
+        # Trap errors so we tear down the failed project instead of stalling
+        on_error() {
+            echo "Docker compose failed, tearing down project $PROJECT..."
+            PORT=$PORT docker compose -p "$PROJECT" down --remove-orphans 2>/dev/null || true
+            exit 1
+        }
+        trap on_error ERR
+
+        # timeout 120 ensures docker compose never stalls indefinitely
+        PORT=$PORT timeout 120 docker compose -p "$PROJECT" up -d --build
+        trap - ERR  # reset trap after success
         echo "Docker rebuilt and running."
     else
         echo "Only frontend changes in commit diff, skipping Docker rebuild."
