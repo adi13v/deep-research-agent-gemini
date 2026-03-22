@@ -11,8 +11,6 @@ PORT=8000 # set as default
 echo "Deployment started..."
 
 cd $REPO_DIR
-
-OLD_COMMIT=$(git rev-parse HEAD)
 # Step 1: Pull latest code
 git pull origin master
 
@@ -98,9 +96,8 @@ else
 fi
 
 # Step 5: Remove old container
-OLD_PROJECT="deep-research-$OLD_COMMIT"
 
-docker compose -p "$OLD_PROJECT" down --remove-orphans 2>/dev/null || true
-echo "Old project $OLD_PROJECT removed."
+docker compose -p "$DOCKER_IMAGE" down --remove-orphans 2>/dev/null || true
+echo "Old project $DOCKER_IMAGE removed."
 
 echo "Deployment completed successfully."
