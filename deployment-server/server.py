@@ -23,7 +23,7 @@ def check_and_deploy():
 
 @app.get("/health")
 def health():
-    return {"status": "ok and ready to deeeeploy"}
+    return {"status": "ok and ready to deploy"}
 
 
 if __name__ == "__main__":
