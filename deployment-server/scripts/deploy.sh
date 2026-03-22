@@ -93,8 +93,8 @@ if [ "$HEALTH_OK" = false ]; then
     exit 1
 else
     echo "Health check passed. Routing nginx to new port $PORT..."
-    sed -i "s/127.0.0.1:[0-9]*/127.0.0.1:$PORT/" /etc/nginx/sites-available/deep-research
-    nginx -t && nginx -s reload
+    sudo sed -i "s/127.0.0.1:[0-9]*/127.0.0.1:$PORT/" /etc/nginx/sites-available/deep-research
+    sudo nginx -t && nginx -s reload
 fi
 
 # Step 5: Remove old container
