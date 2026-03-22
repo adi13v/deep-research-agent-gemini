@@ -88,5 +88,6 @@ if [ "$HEALTH_OK" = false ]; then
     echo "Health check failed, tearing down project $PROJECT..."
     PORT=$PORT docker compose -p "$PROJECT" down --remove-orphans 2>/dev/null || true
     exit 1
+else
+    echo "Health check passed. All good."
 fi
-
