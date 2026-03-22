@@ -69,4 +69,16 @@ else
     echo "No frontend changes, skipping frontend deploy."
 fi
 
+# Step 4: Health check of new created process
+STATUS=$(curl -f http://localhost:$PORT/health)
+
+if [ "$STATUS" != "ok" ]; then
+    echo "Health check failed, tearing down project $PROJECT..."
+    PORT=$PORT docker compose -p "$PROJECT" down --remove-orphans 2>/dev/null || true
+    exit 1
+else
+    echo "Health check passed, switching to new process..."
+    
+fi
+
 echo "Deployment complete!"
