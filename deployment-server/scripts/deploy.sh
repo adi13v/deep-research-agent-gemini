@@ -34,12 +34,14 @@ if [ "$REPO_COMMIT" != "$DOCKER_COMMIT" ]; then
         echo "Backend changes detected, rebuilding Docker..."
         # Blue green deployment
         if ss -ltn | grep -q ':8000 ' ; then
+            OLD_PORT=8000
             PORT=8001
         else
+            OLD_PORT=8001
             PORT=8000
         fi
 
-        PROJECT=deep-research-$COMMIT
+        PROJECT=deep-research-$PORT
         # Trap errors so we tear down the failed project instead of stalling
         on_error() {
             echo "Docker compose failed, tearing down project $PROJECT..."
@@ -97,7 +99,7 @@ fi
 
 # Step 5: Remove old container
 
-docker compose -p "$DOCKER_IMAGE" down --remove-orphans 2>/dev/null || true
+docker compose -p "deep-research-$OLD_PORT" down --remove-orphans 2>/dev/null || true
 echo "Old project $DOCKER_IMAGE removed."
 
 echo "Deployment completed successfully."

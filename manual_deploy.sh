@@ -2,4 +2,5 @@
 set -e
 
 export COMMIT=$(git rev-parse HEAD)
-docker compose up -d --build
+export PORT=8000
+docker compose -p deep-research-$PORT up -d --build
